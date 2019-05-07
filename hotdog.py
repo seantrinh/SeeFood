@@ -4,7 +4,7 @@ from keras.preprocessing.image import load_img, img_to_array
 from keras.preprocessing.image import ImageDataGenerator
 from keras.applications.resnet50 import preprocess_input
 from keras import Sequential
-from keras.layers import Flatten, Dense, Conv2D, Dropout, BatchNormalization, Activation
+from keras.layers import Flatten, Dense, Conv2D, Dropout, BatchNormalization, Activation, MaxPooling2D
 from keras import optimizers
 
 train_path = './data/train'
@@ -46,33 +46,38 @@ train_data = read_and_prep_images(train_data_nhd)
 train_data1 = read_and_prep_images(train_data_hd)
 
 model = Sequential()
-model.add(Conv2D(8, kernel_size=(3,3), input_shape=(img_size, img_size, 3)))
+model.add(Conv2D(32, kernel_size=(3,3), input_shape=(img_size, img_size, 3)))
 model.add(BatchNormalization())
 model.add(Activation('relu'))
-model.add(Conv2D(8, kernel_size=(3,3)))
+model.add(MaxPooling2D((2,2)))
+model.add(Conv2D(64, kernel_size=(3,3)))
 model.add(BatchNormalization())
 model.add(Activation('relu'))
-model.add(Conv2D(8, kernel_size=(3,3)))
+model.add(MaxPooling2D((2,2)))
+model.add(Conv2D(128, kernel_size=(3,3)))
 model.add(BatchNormalization())
 model.add(Activation('relu'))
-model.add(Conv2D(8, kernel_size=(3,3)))
+model.add(MaxPooling2D((2,2)))
+model.add(Conv2D(256, kernel_size=(3,3)))
 model.add(BatchNormalization())
 model.add(Activation('relu'))
-model.add(Conv2D(8, kernel_size=(3,3)))
-model.add(BatchNormalization())
-model.add(Activation('relu'))
+#model.add(Conv2D(32, kernel_size=(3,3)))
+#model.add(BatchNormalization())
+#model.add(Activation('relu'))
 
 model.add(Flatten())
+model.add(Dropout(0.5))
 model.add(Dense(128))
 model.add(BatchNormalization())
 model.add(Activation('relu'))
 model.add(Dense(num_classes, activation='softmax'))
 
+model.summary()
 #LEARNING RATE
-learning_rate = 1E-3
-model.compile(loss='categorical_crossentropy',
-              optimizer=optimizers.RMSprop(lr=learning_rate),
-              metrics=['acc'])
+learning_rate = 1E-4
+model.compile(loss='binary_crossentropy',
+              optimizer=optimizers.Adam(lr=learning_rate),
+              metrics=['accuracy'])
 
 input_x = (train_generator[0][0]/255)
 input_y = (train_generator[0][1])
@@ -80,7 +85,7 @@ input_y = (train_generator[0][1])
 model.fit(input_x,
           input_y,
           batch_size=24,
-          epochs=5)
+          epochs=10)
 
 output_x = (validation_generator[0][0]/255)
 output_y = validation_generator[0][1]
