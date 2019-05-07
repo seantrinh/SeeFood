@@ -20,7 +20,7 @@ train_data_nhd = [os.path.join(not_hot_dog_path, filename)\
 img_size = 224
 num_classes = 2 # hot dog or not hot dog
 
-data_generator = ImageDataGenerator()
+data_generator = ImageDataGenerator(rotation_range=90, width_shift_range=0.1, height_shift_range=0.1, horizontal_flip=True)
 
 train_generator = data_generator.flow_from_directory(
     train_path,
@@ -66,7 +66,7 @@ model.add(Activation('relu'))
 #model.add(Activation('relu'))
 
 model.add(Flatten())
-model.add(Dropout(0.5))
+model.add(Dropout(0.3))
 model.add(Dense(128))
 model.add(BatchNormalization())
 model.add(Activation('relu'))
