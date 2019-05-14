@@ -90,7 +90,7 @@ model.fit(input_x,
           input_y,
           batch_size=32,
 	  validation_split=0.1,
-          epochs=5)
+          epochs=3)
 
 output_x = (validation_generator[0][0])
 output_y = validation_generator[0][1]
