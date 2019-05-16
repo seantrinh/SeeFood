@@ -7,6 +7,6 @@ From HBO's Silicon Valley, the SeeFood app is able to distinguish between photos
 ## Acknowledgements
 The data used to train and test this model was downloaded from Kaggle's Hot Dog - Not Hot Dog Competition. This data was also extracted from the Food 101 dataset.
 
-## Accuracy of the Most Updated Model
+## Accuracy
 
-**72%** 
+The most recent model produced a test accuracy of **72%**. 
