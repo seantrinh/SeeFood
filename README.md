@@ -9,4 +9,4 @@ The data used to train and test this model was downloaded from Kaggle's Hot Dog 
 
 ## Accuracy
 
-The most recent model produced a test accuracy of **72%**. 
+The most recent model produced a test accuracy of **76%**. 
